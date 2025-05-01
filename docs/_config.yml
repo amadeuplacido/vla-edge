@@ -1,0 +1,14 @@
+# Site settings
+title: Project Documentation
+logo: /assets/manumite_gs.webp
+description: Development documentation for my project
+
+# Use GitHub's minimal theme
+theme: jekyll-theme-minimal
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
