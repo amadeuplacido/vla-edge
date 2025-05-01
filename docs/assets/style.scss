@@ -2,3 +2,34 @@
 ---
 
 @import "jekyll-theme-minimal";
+
+/* Constrain the width of the sidebar */
+header {
+  max-width: 300px;
+  float: left;
+  position: fixed;
+}
+
+/* Adjust the section to accommodate the sidebar width */
+section {
+  width: calc(100% - 300px);
+  float: right;
+  padding-bottom: 50px;
+}
+
+/* Media query adjustment for smaller screens */
+@media print, screen and (max-width: 960px) {
+  header {
+    width: auto;
+    max-width: 300px;
+    position: static;
+    float: none;
+  }
+  
+  section {
+    width: auto;
+    float: none;
+    padding: 20px 0;
+    margin: 0 0 20px;
+  }
+}
