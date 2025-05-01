@@ -1,7 +1,7 @@
 # Site settings
 title: VLA-edge
-logo: /assets/manumite-logo.webp
-description:
+logo: /assets/images/manumite-logo.webp
+description: 
 
 # Use GitHub's minimal theme
 theme: jekyll-theme-minimal
