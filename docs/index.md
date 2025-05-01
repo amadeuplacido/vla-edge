@@ -48,7 +48,7 @@ To define the scope of the project, a few architectural decisions are made based
 - MQTT broker is launched in the host OS.
 
 The general architecture of the system is the following:
-![VLA-edge architecture in SysML block diagram](/assets/images/vla-edge-architecture-bdd.png "VLA-edge architecture")
+![VLA-edge architecture](/assets/images/vla-edge-architecture-bdd.png)
 
 The SBC has at least two processing components, a CPU and one or more NPU/GPU. The SBC has a host OS running on its CPU. Host OS can communicate with SBC's NPU/GPU. The host OS has a ROS container, the MQTT broker and the native VLA inference models. The ROS container has the VLA model launcher nodes. The VLA model launcher nodes communicate with the native VLA inference models over MQTT.
 
@@ -73,13 +73,13 @@ Then, once feasibility is validated, I will query the community to develop it fu
 
 ### Version 0.1
 #### Dependencies
-<a href="https://ros.org/"><img src="/assets/images/ROS-logo.png" width="100" height="auto"></a>
+[![]("docs/assets/images/ROS-logo.png")](https://ros.org/)
 <a href="https://mosquitto.org/"><img src="/assets/images/mosquitto-logo.png" width="100" height="auto"></a>
 <a href="https://eclipse.dev/paho/"><img src="/assets/images/paho-logo.png" width="100" height="auto"></a>
 
 #### Raspberry Pi 5 setup
 The Pi I'm working with is booted with a Debian Bookworm distro for Raspberry Pi 5.
-The first task then is to install ROS2 on the Pi. ROS2 current release is Jazzy, and it is available on Docker hub. I followed this tutorial to get the Docker running on Pi: https://docs.docker.com/engine/install/raspberry-pi-os/#install-using-the-convenience-script
+The first task then is to install ROS2 on the Pi. ROS2 current release is Jazzy, and it is available on Docker hub. I followed this tutorial to get the Docker running on Pi: https://docs.ros.org/en/rolling/How-To-Guides/Installing-on-Raspberry-Pi.html#raspberry-pi-os-with-ros-2-in-docker
 
 To enable the AI hat, I first enabled the PCIe to use Gen 3.0 speeds (8 GT/s). The instructions are detailed here: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#pcie-gen-3-0
 
