@@ -14,3 +14,43 @@ Thumbs.db
 .bundle/
 vendor/
 Gemfile.lock
+
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# MQTT artifacts
+.mqtt/
+
+# Editor/IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS specific artifacts
+.DS_Store
+Thumbs.db
+
+# Docker artifacts
+.docker/
+
+# Build logs
+*.log
+
+# Test artifacts
+_build/
+_coverage/
