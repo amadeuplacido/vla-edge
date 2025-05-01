@@ -64,4 +64,4 @@ if ! check_pip_package "paho-mqtt"; then
     echo "paho-mqtt installed"
 fi
 
-echo "VLA-edge: All dependencies are installed and configured.
+echo "VLA-edge: All dependencies are installed and configured."
