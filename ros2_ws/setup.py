@@ -1,6 +1,4 @@
 from setuptools import setup
-import os
-from glob import glob
 
 package_name = 'mqtt_bridge'
 
@@ -13,7 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools', 'paho-mqtt'],
+    install_requires=['setuptools', 'rclpy', 'std_msgs'],
     zip_safe=True,
     maintainer='manumite',
     maintainer_email='support@manumite.com',

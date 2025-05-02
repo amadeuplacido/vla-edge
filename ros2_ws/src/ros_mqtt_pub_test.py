@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
-from mqtt_bridge.msg import MqttMsg
+from std_msgs.msg import String
 import paho.mqtt.client as mqtt
 
 class RosToMqttNode(Node):
@@ -10,7 +10,7 @@ class RosToMqttNode(Node):
         
         # Create ROS subscriber to topic_C
         self.subscription = self.create_subscription(
-            MqttMsg,
+            String,
             'topic_C',
             self.ros_callback,
             10

@@ -1,40 +1,28 @@
 FROM ros:jazzy
 
-# Install Python MQTT client
+# Install all required packages in a single layer
 RUN apt-get update && apt-get install -y \
-    python3-pip \
+    ros-jazzy-rosidl-default-generators \
+    ros-jazzy-rosidl-default-runtime \
+    nano \
+    && pip3 install --break-system-packages paho-mqtt \
     && rm -rf /var/lib/apt/lists/*
-
-RUN apt-cache search paho-mqtt
-RUN pip3 install --user paho-mqtt
 
 # Create workspace structure
 WORKDIR /ros2_ws
 RUN mkdir -p /ros2_ws/src/mqtt_bridge/mqtt_bridge \
-    /ros2_ws/src/mqtt_bridge/resource \
-    /ros2_ws/src/msgs/msg
-
-# Copy ROS2 workspace files
-# Copy message definition
-COPY ./../../../ros2_ws/msg/ /ros2_ws/src/msgs/msg/
-
-# Copy ROS node source files
-COPY ./../../../ros2_ws/src/ros_mqtt_pub_test.py /ros2_ws/src/mqtt_bridge/mqtt_bridge/
-COPY ./../../../ros2_ws/src/ros_mqtt_sub_test.py /ros2_ws/src/mqtt_bridge/mqtt_bridge/
-
-# Copy package configuration files
-COPY ./../../../ros2_ws/package.xml /ros2_ws/src/mqtt_bridge/
-COPY ./../../../ros2_ws/setup.py /ros2_ws/src/mqtt_bridge/
+    /ros2_ws/src/mqtt_bridge/resource
 
 # Create required files
 RUN touch /ros2_ws/src/mqtt_bridge/resource/mqtt_bridge
 RUN touch /ros2_ws/src/mqtt_bridge/mqtt_bridge/__init__.py
 
-# Install message generation dependencies
-RUN apt-get update && apt-get install -y \
-    ros-jazzy-rosidl-default-generators \
-    ros-jazzy-rosidl-default-runtime \
-    && rm -rf /var/lib/apt/lists/*
+# Copy ROS node source files
+COPY ros2_ws/src/ /ros2_ws/src/mqtt_bridge/mqtt_bridge/
+
+# Copy package configuration files
+COPY ros2_ws/package.xml /ros2_ws/src/mqtt_bridge/
+COPY ros2_ws/setup.py /ros2_ws/src/mqtt_bridge/
 
 # Build the ROS package
 RUN . /opt/ros/jazzy/setup.sh && \

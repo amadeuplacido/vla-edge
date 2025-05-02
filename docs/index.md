@@ -98,11 +98,15 @@ The first project will port the LeRobot VLA model for the Raspberry Pi 5 AI HAT+
 | *BeagleBoard BeagleY-AI* | TBD         | TBD         | TBD        | TBD           | TBD?          |
 |--------------------------|-------------|-------------|------------|---------------|---------------|
 
-### Version 0.1
+### LeRobot on Raspberry Pi 5 AI HAT+ (`lerapi`)
 #### Dependencies
-[![](docs/assets/images/ROS-logo.png)](https://ros.org/)
+Raspberry Pi 5 AI HAT+ official OS is the Debian 12 Bookworm. It supports ROS2 on Docker, Mosquitto as MQTT broker and Paho package to implement the MQTT clients on the host (and on the ROS2 container).
+
+ <a href="https://www.docker.com/"><img src="/assets/images/Docker-logo.png" width="150"></a>
+[![](/assets/images/ROS-logo.png)](https://ros.org/){:width="150px"}
 [![](/assets/images/mosquitto-logo.png)](https://mosquitto.org/)
 [![](/assets/images/paho-logo.png)](https://eclipse.dev/paho/)
+<>
 
 #### Raspberry Pi 5 setup
 The Pi I'm working with is booted with a Debian Bookworm distro for Raspberry Pi 5.
