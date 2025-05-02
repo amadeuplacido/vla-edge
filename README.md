@@ -1,2 +1,4 @@
 # vla-edge
-Step by step integration of popular open-source VLA models for inference on equally popular, ROS2-ready, (preferably open-source) AI-purpose SBCs
+`VLA-edge` is an open-source portfolio to provide a standard framework for edge vision-language-action (VLA) inference engines.
+
+Visit the [project page](https://amadeuplacido.github.io/vla-edge/).

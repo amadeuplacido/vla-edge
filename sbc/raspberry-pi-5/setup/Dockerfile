@@ -15,15 +15,15 @@ RUN mkdir -p /ros2_ws/src/mqtt_bridge/mqtt_bridge \
 
 # Copy ROS2 workspace files
 # Copy message definition
-COPY ./../../ros2_ws/msg/ /ros2_ws/src/msgs/msg/
+COPY ./../../../ros2_ws/msg/ /ros2_ws/src/msgs/msg/
 
 # Copy ROS node source files
-COPY ./../../ros2_ws/src/ros_mqtt_pub_test.py /ros2_ws/src/mqtt_bridge/mqtt_bridge/
-COPY ./../../ros2_ws/src/ros_mqtt_sub_test.py /ros2_ws/src/mqtt_bridge/mqtt_bridge/
+COPY ./../../../ros2_ws/src/ros_mqtt_pub_test.py /ros2_ws/src/mqtt_bridge/mqtt_bridge/
+COPY ./../../../ros2_ws/src/ros_mqtt_sub_test.py /ros2_ws/src/mqtt_bridge/mqtt_bridge/
 
 # Copy package configuration files
-COPY ./../../ros2_ws/package.xml /ros2_ws/src/mqtt_bridge/
-COPY ./../../ros2_ws/setup.py /ros2_ws/src/mqtt_bridge/
+COPY ./../../../ros2_ws/package.xml /ros2_ws/src/mqtt_bridge/
+COPY ./../../../ros2_ws/setup.py /ros2_ws/src/mqtt_bridge/
 
 # Create required files
 RUN touch /ros2_ws/src/mqtt_bridge/resource/mqtt_bridge

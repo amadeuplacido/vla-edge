@@ -20,9 +20,9 @@ fi
 echo "Checking if MQTT broker is already running..."
 
 if check_mqtt_port; then
-    echo "✅ MQTT broker is already running on port 1883"
+    echo "MQTT broker is already running on port 1883"
 else
-    echo "❌ No MQTT broker detected on port 1883"
+    echo "No MQTT broker detected on port 1883"
     echo "Starting mosquitto broker..."
     
     # Check if mosquitto is running as a service
@@ -40,9 +40,9 @@ else
     
     # Verify that mosquitto is now running
     if check_mqtt_port; then
-        echo "✅ MQTT broker started successfully"
+        echo "MQTT broker started successfully"
     else
-        echo "❌ Failed to start MQTT broker. Check mosquitto status with:"
+        echo "Failed to start MQTT broker. Check mosquitto status with:"
         echo "   sudo systemctl status mosquitto"
     fi
 fi

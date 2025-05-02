@@ -12,14 +12,12 @@ check_package() {
     fi
 }
 
-# Function to check if a Python package is installed
-check_pip_package() {
-    if pip list | grep -F "$1" >/dev/null 2>&1; then
-        echo "Python package $1 is already installed"
-        return 0
+# Function to check if Docker image exists
+check_docker_image() {
+    if docker image inspect "$1" >/dev/null 2>&1; then
+        return 0  # Image exists
     else
-        echo "Python package $1 is not installed"
-        return 1
+        return 1  # Image does not exist
     fi
 }
 
@@ -49,19 +47,73 @@ if ! check_package "mosquitto-clients"; then
     echo "Mosquitto clients installed"
 fi
 
-# Check for pip
-if ! command -v pip >/dev/null 2>&1; then
-    echo "Installing pip..."
+# Check for Python MQTT client (using system package manager)
+if ! check_package "python3-paho-mqtt"; then
+    echo "Installing python3-paho-mqtt using apt..."
     sudo apt-get update
-    sudo apt-get install -y python3-pip
-    echo "pip installed"
+    sudo apt-get install -y python3-paho-mqtt
+    echo "python3-paho-mqtt installed"
+else
+    echo "python3-paho-mqtt is already installed"
 fi
 
-# Check for paho-mqtt
-if ! check_pip_package "paho-mqtt"; then
-    echo "Installing paho-mqtt..."
-    pip install paho-mqtt
-    echo "paho-mqtt installed"
+# Check for Docker
+if ! command -v docker &> /dev/null; then
+    echo "Docker is not installed"
+    echo "Please install Docker manually following the official instructions:"
+    echo "https://docs.docker.com/engine/install/"
+    exit 1
+else
+    echo "Docker is already installed"
+fi
+
+# Check for Docker image
+if check_docker_image "mqtt_ros_bridge"; then
+    echo "Docker image 'mqtt_ros_bridge' already exists"
+    
+    # Ask if user wants to rebuild the image
+    read -p "Do you want to rebuild the Docker image? (y/N): " rebuild
+    if [[ $rebuild != "y" && $rebuild != "Y" ]]; then
+        echo "Skipping Docker image build."
+    else
+        # Build Docker image
+        echo "Rebuilding Docker image for ROS2 MQTT bridge..."
+        
+        # Check if Dockerfile exists
+        if [ ! -f "Dockerfile" ]; then
+            echo "Dockerfile not found in current directory"
+            echo "Please make sure you're running this script from the same directory as the Dockerfile."
+            exit 1
+        fi
+        
+        # Build the Docker image
+        docker build -t mqtt_ros_bridge .
+        if [ $? -eq 0 ]; then
+            echo "Docker image rebuilt successfully"
+        else
+            echo "Docker image build failed"
+            exit 1
+        fi
+    fi
+else
+    # Build Docker image
+    echo "Building Docker image for ROS2 MQTT bridge..."
+    
+    # Check if Dockerfile exists
+    if [ ! -f "Dockerfile" ]; then
+        echo "Dockerfile not found in current directory"
+        echo "Please make sure you're running this script from the same directory as the Dockerfile."
+        exit 1
+    fi
+    
+    # Build the Docker image
+    docker build -t mqtt_ros_bridge .
+    if [ $? -eq 0 ]; then
+        echo "Docker image built successfully"
+    else
+        echo "Docker image build failed"
+        exit 1
+    fi
 fi
 
 echo "VLA-edge: All dependencies are installed and configured."
