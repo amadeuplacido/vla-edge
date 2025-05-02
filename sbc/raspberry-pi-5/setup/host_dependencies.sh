@@ -67,6 +67,12 @@ else
     echo "Docker is already installed"
 fi
 
+# Save the current directory
+CURRENT_DIR=$(pwd)
+
+# Navigate to the project root
+cd ../../../
+
 # Check for Docker image
 if check_docker_image "mqtt_ros_bridge"; then
     echo "Docker image 'mqtt_ros_bridge' already exists"
@@ -83,15 +89,17 @@ if check_docker_image "mqtt_ros_bridge"; then
         if [ ! -f "Dockerfile" ]; then
             echo "Dockerfile not found in current directory"
             echo "Please make sure you're running this script from the same directory as the Dockerfile."
+            cd "$CURRENT_DIR"
             exit 1
         fi
         
         # Build the Docker image
-        docker build -t mqtt_ros_bridge .
+        docker build -t mqtt_ros_bridge -f sbc/raspberry-pi-5/setup/Dockerfile .
         if [ $? -eq 0 ]; then
             echo "Docker image rebuilt successfully"
         else
             echo "Docker image build failed"
+            cd "$CURRENT_DIR"
             exit 1
         fi
     fi
@@ -103,17 +111,20 @@ else
     if [ ! -f "Dockerfile" ]; then
         echo "Dockerfile not found in current directory"
         echo "Please make sure you're running this script from the same directory as the Dockerfile."
+        cd "$CURRENT_DIR"
         exit 1
     fi
     
     # Build the Docker image
-    docker build -t mqtt_ros_bridge .
+    docker build -t mqtt_ros_bridge -f sbc/raspberry-pi-5/setup/Dockerfile .
     if [ $? -eq 0 ]; then
         echo "Docker image built successfully"
     else
         echo "Docker image build failed"
+        cd "$CURRENT_DIR"
         exit 1
     fi
 fi
 
+cd "$CURRENT_DIR"
 echo "VLA-edge: All dependencies are installed and configured."
