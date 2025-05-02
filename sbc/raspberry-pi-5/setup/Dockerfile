@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-rosidl-default-generators \
     ros-jazzy-rosidl-default-runtime \
     nano \
+    python3-pip \
     && pip3 install --break-system-packages paho-mqtt \
     && rm -rf /var/lib/apt/lists/*
 
