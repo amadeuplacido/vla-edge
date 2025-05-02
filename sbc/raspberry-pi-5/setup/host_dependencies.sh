@@ -86,7 +86,7 @@ if check_docker_image "mqtt_ros_bridge"; then
         echo "Rebuilding Docker image for ROS2 MQTT bridge..."
         
         # Check if Dockerfile exists
-        if [ ! -f "Dockerfile" ]; then
+        if [ ! -f "./sbc/raspberry-pi-5/setup/Dockerfile" ]; then
             echo "Dockerfile not found in current directory"
             echo "Please make sure you're running this script from the same directory as the Dockerfile."
             cd "$CURRENT_DIR"
@@ -106,14 +106,6 @@ if check_docker_image "mqtt_ros_bridge"; then
 else
     # Build Docker image
     echo "Building Docker image for ROS2 MQTT bridge..."
-    
-    # Check if Dockerfile exists
-    if [ ! -f "Dockerfile" ]; then
-        echo "Dockerfile not found in current directory"
-        echo "Please make sure you're running this script from the same directory as the Dockerfile."
-        cd "$CURRENT_DIR"
-        exit 1
-    fi
     
     # Build the Docker image
     docker build -t mqtt_ros_bridge -f sbc/raspberry-pi-5/setup/Dockerfile .
