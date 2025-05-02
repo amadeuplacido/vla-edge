@@ -19,15 +19,15 @@ There are many general-purpose robot plaforms under development by OEMs, with di
 
 Here are the most popular and affordable AI-accelerated SBCs available as of April 2025:
 - [Raspberry Pi 5 AI HAT+](https://www.raspberrypi.com/products/ai-hat/) (open-source)
-- [Coral Dev Board](https://www.coral.ai/products/dev-board/) (open-source)
+- [Coral Dev Board](https://www.coral.ai/products/dev-board/)
 - [BeagleBoard BeagleY-AI](https://www.beagleboard.org/boards/beagley-ai) (open-source)
 - [Libre Computer Alta](https://libre.computer/products/aml-a311d-cc/) (open-source)
 - [NVIDIA Jetson Orin Nano](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/nano-super-developer-kit/)
 - [Udoo Bolt](https://www.udoo.org/discover-the-udoo-bolt/)
 - [Latte Panda Delta V3](https://www.lattepanda.com/lattepanda-3-delta)
 - [UP Squared 7000](https://up-board.org/up-7000/?ADLN01Board)
-- [Orange Pi 5 Ultra](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5-Ultra.html)
-- [Banana Pi BPI-M5 Pro](https://docs.banana-pi.org/en/BPI-M5/BananaPi_BPI-M5_Pro)
+- [Orange Pi 5 Ultra](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5-Ultra.html) (open-source)
+- [Banana Pi BPI-M5 Pro](https://docs.banana-pi.org/en/BPI-M5/BananaPi_BPI-M5_Pro) (open-source)
 
 There are several reasons behind the wide-spread adoption of ROS by OEMs in the robotics industry. ROS is 100% open-source, has a global community with over a decade of activity, is designed as multi-domain and multi-platform (runs on Windows, Linux, MacOS and various embedded OSs), allows commercialisation, minimises time to market and has its own industry governance body: the [open-source robotics alliance](https://osralliance.org/).
 
@@ -84,21 +84,19 @@ The program is set to be developed incrementally with several projects -- each m
 
 The first project will port the LeRobot VLA model for the Raspberry Pi 5 AI HAT+, and will be used as pathfinding for the subsequent projects.
 
-|---------------------------------------------------------------------------------------------------|
-|                          |                    **VLA models**                                      |
-|--------------------------|-------------|-------------|------------|---------------|---------------|
-|         **SBCs**         |  *LeRobot*  |  *OpenVLA*  |  *OpenPI*  |  *DexVLA*     |  *Octo-Tiny*  |
-|--------------------------|-------------|-------------|------------|---------------|---------------|
-| *Raspberry Pi 5 AI HAT+* | 2025        | TBD         | TBD        | TBD           | TBD?          |
-|--------------------------|-------------|-------------|------------|---------------|---------------|
-| *Libre Computer Alta*    | TBD         | TBD         | TBD        | TBD           | TBD?          |
-|--------------------------|-------------|-------------|------------|---------------|---------------|
-| *Coral Dev Board*        | TBD         | TBD         | TBD        | TBD           | TBD?          |
-|--------------------------|-------------|-------------|------------|---------------|---------------|
-| *BeagleBoard BeagleY-AI* | TBD         | TBD         | TBD        | TBD           | TBD?          |
-|--------------------------|-------------|-------------|------------|---------------|---------------|
+|----------------------------------------------------------------------------------------------------------|
+|                          | **VLA models**                                                                |
+|--------------------------|---------------|---------------|---------------|---------------|---------------|
+| **SBCs**                 | *LeRobot*     | *OpenVLA-OFT* | *OpenPI*      | *DexVLA*      | *Octo-Tiny*   |
+|--------------------------|---------------|---------------|---------------|---------------|---------------|
+| *Raspberry Pi 5 AI HAT+* | `lerypi` 2025 | `oftypi` TBD  | `opiypi` TBD  | `dexypi` TBD  | `octypi` TBD? |
+|--------------------------|---------------|---------------|---------------|---------------|---------------|
+| *Libre Computer Alta*    | `lerlta` TBD  | `oftlta` TBD  | `opilta` TBD  | `dexlta` TBD  | `octlta` TBD? |
+|--------------------------|---------------|---------------|---------------|---------------|---------------|
+| *BeagleBoard BeagleY-AI* | `lerley` TBD  | `oftley` TBD  | `opiley` TBD  | `dexley` TBD  | `octley` TBD? |
+|--------------------------|---------------|---------------|---------------|---------------|---------------|
 
-### LeRobot on Raspberry Pi 5 AI HAT+ (`lerapi`)
+### LeRobot on Raspberry Pi 5 AI HAT+ (`lerypi`)
 #### Dependencies
 Raspberry Pi 5 AI HAT+ official OS is the Debian 12 Bookworm. It supports ROS2 on Docker, Mosquitto as MQTT broker and Paho package to implement the MQTT clients on the host (and on the ROS2 container).
 

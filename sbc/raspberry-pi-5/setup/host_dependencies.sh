@@ -74,8 +74,8 @@ CURRENT_DIR=$(pwd)
 cd ../../../
 
 # Check for Docker image
-if check_docker_image "mqtt_ros_bridge"; then
-    echo "Docker image 'mqtt_ros_bridge' already exists"
+if check_docker_image "mqtt_ros_bridge_simple"; then
+    echo "Docker image 'mqtt_ros_bridge_simple' already exists"
     
     # Ask if user wants to rebuild the image
     read -p "Do you want to rebuild the Docker image? (y/N): " rebuild
@@ -94,7 +94,7 @@ if check_docker_image "mqtt_ros_bridge"; then
         fi
         
         # Build the Docker image
-        docker build -t mqtt_ros_bridge -f sbc/raspberry-pi-5/setup/Dockerfile .
+        docker build -t mqtt_ros_bridge_simple -f sbc/raspberry-pi-5/setup/Dockerfile .
         if [ $? -eq 0 ]; then
             echo "Docker image rebuilt successfully"
         else
@@ -108,7 +108,7 @@ else
     echo "Building Docker image for ROS2 MQTT bridge..."
     
     # Build the Docker image
-    docker build -t mqtt_ros_bridge -f sbc/raspberry-pi-5/setup/Dockerfile .
+    docker build -t mqtt_ros_bridge_simple -f sbc/raspberry-pi-5/setup/Dockerfile .
     if [ $? -eq 0 ]; then
         echo "Docker image built successfully"
     else

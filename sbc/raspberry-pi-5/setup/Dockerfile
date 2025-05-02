@@ -1,15 +1,13 @@
 FROM ros:jazzy
 
-# Install all required packages in a single layer
+# Install dependencies
 RUN apt-get update && apt-get install -y \
-    ros-jazzy-rosidl-default-generators \
-    ros-jazzy-rosidl-default-runtime \
-    nano \
     python3-pip \
+    nano \
     && pip3 install --break-system-packages paho-mqtt \
     && rm -rf /var/lib/apt/lists/*
 
-# Create workspace structure
+# Create workspace structure (proper ROS2 structure)
 WORKDIR /ros2_ws
 RUN mkdir -p /ros2_ws/src/mqtt_bridge/mqtt_bridge \
     /ros2_ws/src/mqtt_bridge/resource
@@ -29,5 +27,12 @@ COPY ros2_ws/setup.py /ros2_ws/src/mqtt_bridge/
 RUN . /opt/ros/jazzy/setup.sh && \
     colcon build --symlink-install
 
-# Entry script that runs both nodes
-CMD ["bash", "-c", "source /opt/ros/jazzy/setup.bash && source /ros2_ws/install/setup.bash && (ros2 run mqtt_bridge ros_mqtt_sub & ros2 run mqtt_bridge ros_mqtt_pub)"]
+# Entry script with explicit sourcing and starting both nodes directly
+CMD ["bash", "-c", "\
+    source /opt/ros/jazzy/setup.bash && \
+    source /ros2_ws/install/setup.bash && \
+    ros2 daemon start && \
+    echo 'Starting ROS2 nodes...' && \
+    python3 /ros2_ws/src/mqtt_bridge/mqtt_bridge/ros_mqtt_sub_test.py & \
+    python3 /ros2_ws/src/mqtt_bridge/mqtt_bridge/ros_mqtt_pub_test.py \
+"]
