@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-RUN sudo apt-get install -y python3-paho-mqtt
+RUN apt-cache search paho-mqtt
+RUN pip3 install --user paho-mqtt
 
 # Create workspace structure
 WORKDIR /ros2_ws
@@ -31,7 +32,6 @@ RUN touch /ros2_ws/src/mqtt_bridge/mqtt_bridge/__init__.py
 
 # Install message generation dependencies
 RUN apt-get update && apt-get install -y \
-    python3-paho-mqtt \
     ros-jazzy-rosidl-default-generators \
     ros-jazzy-rosidl-default-runtime \
     && rm -rf /var/lib/apt/lists/*
