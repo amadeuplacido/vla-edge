@@ -3,7 +3,6 @@ FROM ros:jazzy
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     python3-pip \
-    nano \
     && pip3 install --break-system-packages paho-mqtt \
     && rm -rf /var/lib/apt/lists/*
 
