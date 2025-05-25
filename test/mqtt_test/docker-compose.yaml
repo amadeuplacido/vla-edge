@@ -1,4 +1,11 @@
 services:
+  mqtt_broker:
+    image: eclipse-mosquitto:2.0.21
+    ports:
+      - "${MQTT_PORT}:${MQTT_PORT}"
+    volumes:
+      - ./logs:/mosquitto/log
+      - ./mqtt_broker.conf:/mosquitto/config/mosquitto.conf"
   pub:
     #TODO
   sub:
