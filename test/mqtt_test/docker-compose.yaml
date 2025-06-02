@@ -1,12 +1,26 @@
 services:
   mqtt_broker:
     image: eclipse-mosquitto:2.0.21
+    hostname: ${MQTT_BROKER_HOSTNAME}
     ports:
       - "${MQTT_PORT}:${MQTT_PORT}"
     volumes:
-      - ./logs:/mosquitto/log
-      - ./mqtt_broker.conf:/mosquitto/config/mosquitto.conf"
-  pub:
+      - ./logs/:/mosquitto/log/
+      - ./mqtt_broker.conf:/mosquitto/config/mosquitto.conf
+    healthcheck:
+      test: ["CMD-SHELL", "timeout -t 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 6
+  
+  mqtt_pub:
+    build: ../../sbc/raspberry-pi-5/setup/
+    environment:
+      - MQTT_BROKER_HOSTNAME=${MQTT_BROKER_HOSTNAME}
+    depends_on:
+      mqtt_broker:
+        condition: service_healthy
     #TODO
-  sub:
+  
+  mqtt_sub:
     #TODO
