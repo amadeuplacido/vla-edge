@@ -2,25 +2,42 @@ services:
   mqtt_broker:
     image: eclipse-mosquitto:2.0.21
     hostname: ${MQTT_BROKER_HOSTNAME}
-    ports:
-      - "${MQTT_PORT}:${MQTT_PORT}"
+    #ports:
+    #  - "${MQTT_PORT}:${MQTT_PORT}"
     volumes:
       - ./logs/:/mosquitto/log/
       - ./mqtt_broker.conf:/mosquitto/config/mosquitto.conf
     healthcheck:
-      test: ["CMD-SHELL", "timeout -t 5 mosquitto_sub -t '$$SYS/#' -C 1 | grep -v Error || exit 1"]
+      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
       interval: 10s
       timeout: 10s
       retries: 6
   
-  mqtt_pub:
-    build: ../../sbc/raspberry-pi-5/setup/
+  ros2:
+    build: ../../ros2_ws/
     environment:
       - MQTT_BROKER_HOSTNAME=${MQTT_BROKER_HOSTNAME}
+    command: >
+      /bin/bash -c
+      "
+      python3 /ros2_ws/src/mqtt_bridge/mqtt_bridge/ros_mqtt_pub_test.py
+      & python3 /ros2_ws/src/mqtt_bridge/mqtt_bridge/ros_mqtt_sub_test.py
+      "
     depends_on:
       mqtt_broker:
         condition: service_healthy
-    #TODO
   
-  mqtt_sub:
-    #TODO
+  mqtt_pub_sub:
+    build: mqtt_pub_sub/
+    environment:
+      - MQTT_BROKER_HOSTNAME=${MQTT_BROKER_HOSTNAME}
+      - PYTHONUNBUFFERED=1
+    command: >
+      "
+      python3 /usr/app/src/host_mqtt_sub_test.py
+      "
+    #  & python3 /usr/app/src/host_mqtt_sub_test.py
+    #  "
+    depends_on:
+      mqtt_broker:
+        condition: service_healthy

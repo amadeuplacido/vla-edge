@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
+import os
+
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 import paho.mqtt.client as mqtt
 
 class MqttToRosNode(Node):
-    def __init__(self):
+    def __init__(self, mqtt_broker_hostname):
         super().__init__('mqtt_to_ros_node')
         
         # Create ROS publisher to topic_C
@@ -16,8 +18,9 @@ class MqttToRosNode(Node):
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_message = self.on_message
         
-        # Connect to MQTT broker (host.docker.internal points to the host from Docker)
-        self.mqtt_client.connect("host.docker.internal", 1883, 60)
+        # Connect to MQTT broker
+        self.mqtt_client.connect(mqtt_broker_hostname, 1883, 60)
+        print("CONNECTED")
         self.mqtt_client.loop_start()
         
         self.get_logger().info('MQTT to ROS bridge initialized')
@@ -37,7 +40,8 @@ class MqttToRosNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MqttToRosNode()
+    mqtt_broker_hostname = os.environ.get("MQTT_BROKER_HOSTNAME", "localhost")
+    node = MqttToRosNode(mqtt_broker_hostname)
     
     try:
         rclpy.spin(node)

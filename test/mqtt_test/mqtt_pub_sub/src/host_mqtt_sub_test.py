@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import paho.mqtt.client as mqtt
 import datetime
+import os
 
 # Function to parse timestamp string into datetime object
 def parse_timestamp(timestamp_str):
