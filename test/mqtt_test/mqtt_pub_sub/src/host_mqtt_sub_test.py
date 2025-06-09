@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import paho.mqtt.client as mqtt
 import datetime
+import os
 
 # Function to parse timestamp string into datetime object
 def parse_timestamp(timestamp_str):
@@ -36,8 +37,11 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
+# Take broker hostname from environment variable
+hostname = os.environ.get("MQTT_BROKER_HOSTNAME", "localhost")
+
 # Connect to broker running on localhost
-client.connect("localhost", 1883, 60)
+client.connect(hostname, 1883, 60)
 
 # Loop forever to receive messages
 client.loop_forever()

@@ -2,12 +2,16 @@
 import paho.mqtt.client as mqtt
 import time
 import datetime
+import os
+
+# Take broker hostname from environment variable
+hostname = os.environ.get("MQTT_BROKER_HOSTNAME", "localhost")
 
 # Create MQTT client
 client = mqtt.Client()
 
 # Connect to broker running on localhost
-client.connect("localhost", 1883, 60)
+client.connect(hostname, 1883, 60)
 
 # Start the loop in thread
 client.loop_start()
