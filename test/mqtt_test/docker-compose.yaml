@@ -2,8 +2,6 @@ services:
   mqtt_broker:
     image: eclipse-mosquitto:2.0.21
     hostname: ${MQTT_BROKER_HOSTNAME}
-    #ports:
-    #  - "${MQTT_PORT}:${MQTT_PORT}"
     volumes:
       - ./logs/:/mosquitto/log/
       - ./mqtt_broker.conf:/mosquitto/config/mosquitto.conf
@@ -35,9 +33,8 @@ services:
     command: >
       "
       python3 /usr/app/src/host_mqtt_sub_test.py
+      & python3 /usr/app/src/host_mqtt_pub_test.py
       "
-    #  & python3 /usr/app/src/host_mqtt_sub_test.py
-    #  "
     depends_on:
       mqtt_broker:
         condition: service_healthy
